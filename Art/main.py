@@ -2,57 +2,69 @@ import turtle
 import random
 import time
 # Function to generate random RGB color tuples
-def generate_random_color():
-    return (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
+def generate_random_color(Color_Amount:int = 100):
+    Colors =[
+        (
+            random.randint(0, 255),
+            random.randint(0, 255),
+            random.randint(0, 255)
+        ) 
+        for _ in range(Color_Amount)
+    ]
 
-# Generate list of 100 random RGB color tuples
-random_colors = [generate_random_color() for _ in range(100)]
+    return Colors
 
 
-#setting turtle
+def set_pointer(position:tuple = (0,0), speed:str = "slow", width:float = 1, draw:bool = True):
+    pointer.up()
+    pointer.goto(position)
+    pointer.speed(speed)
+    pointer.width(width)
+    if draw: pointer.down() 
+    else: pointer.up()
+    
+    time.sleep(2)
+    pointer.clear()
+
+
+# SETTINGS
+    
+    #Turtle
 pointer = turtle.Turtle()
 pointer.hideturtle()
 turtle.colormode(255)
 
-#screen settings
+
+    #Screen
 scr = turtle.Screen()
 scr.setup(width=500, height=500)
 
-pointer.up()
-pointer.goto(-125,-125)
-pointer.speed("slow")
-pointer.width(20)
-pointer.down()
+    #Assets
+random_colors:list = generate_random_color()
 
 
+
+#STARTING PROGRAM
+
+set_pointer((-125,-125),"slow",20,True)
 
 for position in range(4):
     pointer.forward(225)
     pointer.left(90)
 
-time.sleep(3)
-pointer.clear()
 
+set_pointer((0,0),"fastest",1,True)
 
-pointer.up()
-pointer.speed("fastest")
-pointer.goto(0,0)
-pointer.width(1)
-pointer.down()
 for position in range(100):
     pointer.color(random.choice(random_colors))
     pointer.circle(100)
     pointer.setheading(pointer.heading() + 10)
 
 
-pointer.clear()
+set_pointer((-210,-210),"fastest",1,False)
 
 
-pointer.up()
-pointer.goto(-210,-210)
-pointer.speed("fastest")
 a = pointer.heading()
-print(a)
 pointer.left(360-a)
 y = 20
 
@@ -64,8 +76,6 @@ for position in range(1, 199):
         pointer.goto(-210, -210 + y)
         y +=20
     
-
-
 
 
 scr.exitonclick()
